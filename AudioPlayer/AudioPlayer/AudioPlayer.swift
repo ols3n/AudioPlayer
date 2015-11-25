@@ -804,6 +804,8 @@ public class AudioPlayer: NSObject {
                 if let stateWhenConnectionLost = stateWhenConnectionLost where stateWhenConnectionLost != .Stopped {
                     if fabs(connectionLossDate.timeIntervalSinceNow) < maximumConnectionLossTime {
                         retryOrPlayNext()
+                    } else {
+                        stop()
                     }
                 }
                 self.connectionLossDate = nil
@@ -818,6 +820,7 @@ public class AudioPlayer: NSObject {
             else {
                 connectionLossDate = NSDate()
                 stateWhenConnectionLost = state
+                state = .WaitingForConnection
             }
         }
     }
